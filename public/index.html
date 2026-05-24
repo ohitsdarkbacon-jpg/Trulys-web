@@ -529,13 +529,13 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
 <div id="page-home" class="page active">
   <div class="ticker-bar">
     <div class="ticker-inner">
-      <span class="ticker-item"><strong>PRO</strong> — 6 global slots · $6/hour</span>
-      <span class="ticker-item"><strong>BID</strong> — 2 slots · $12 min · 2hr prize</span>
+      <span class="ticker-item"><strong>PRO</strong> — 6 global slots · $10/day</span>
+      <span class="ticker-item"><strong>BID</strong> — 1 slot · $10 min · 1 day prize</span>
       <span class="ticker-item"><strong>PAYMENTS</strong> — BTC · LTC · Auto-confirmed</span>
       <span class="ticker-item"><strong>AUTH</strong> — Discord OAuth2 · Luarmor HWID lock</span>
       <span class="ticker-item"><strong>UPTIME</strong> — 99.9% · 1B+ notifications sent</span>
-      <span class="ticker-item"><strong>PRO</strong> — 6 global slots · $6/hour</span>
-      <span class="ticker-item"><strong>BID</strong> — 2 slots · $12 min · 2hr prize</span>
+      <span class="ticker-item"><strong>PRO</strong> — 6 global slots · $10/day</span>
+      <span class="ticker-item"><strong>BID</strong> — 1 slot · $10 min · 1 day prize</span>
       <span class="ticker-item"><strong>PAYMENTS</strong> — BTC · LTC · Auto-confirmed</span>
       <span class="ticker-item"><strong>AUTH</strong> — Discord OAuth2 · Luarmor HWID lock</span>
       <span class="ticker-item"><strong>UPTIME</strong> — 99.9% · 1B+ notifications sent</span>
@@ -556,8 +556,8 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
 
     <div class="hero-preview">
       <div class="hero-preview-inner">
-        <div class="pcard"><div class="pcard-label">Pro Tier</div><div class="pcard-val">$6</div><div class="pcard-sub">per hour · 6 global slots</div></div>
-        <div class="pcard"><div class="pcard-label">Auction Tier</div><div class="pcard-val">$12+</div><div class="pcard-sub">min bid · 2hr prize · 2 slots</div></div>
+        <div class="pcard"><div class="pcard-label">Pro Tier</div><div class="pcard-val">$10</div><div class="pcard-sub">per day · 6 global slots</div></div>
+        <div class="pcard"><div class="pcard-label">Auction Tier</div><div class="pcard-val">$10+</div><div class="pcard-sub">min bid · 1 day prize · 1 slot</div></div>
         <div class="pcard"><div class="pcard-label">Payments</div><div class="pcard-val" style="font-size:1.6rem;letter-spacing:0.02em;">BTC·LTC</div><div class="pcard-sub">Auto-confirmed via NowPayments</div></div>
         <div class="pcard"><div class="pcard-label">Auth</div><div class="pcard-val" style="font-size:1.6rem;letter-spacing:0.04em;">Discord</div><div class="pcard-sub">OAuth2 · Luarmor HWID lock</div></div>
       </div>
@@ -679,8 +679,8 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
         <div class="plan-price-row">
           <div class="plan-price-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Price:</div>
           <div class="plan-price-val">
-            <div class="plan-price-big">$6/hour</div>
-            <div class="plan-price-sub">billed per hour</div>
+            <div class="plan-price-big">$10/day</div>
+            <div class="plan-price-sub">billed per day</div>
           </div>
         </div>
         <div class="plan-card-foot">
@@ -731,7 +731,7 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
           <div class="plan-price-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Current Bid:</div>
           <div class="plan-price-val">
             <div class="plan-price-big" id="bid-plan-price-big">$0.00</div>
-            <div class="plan-price-sub">min $12 to start</div>
+            <div class="plan-price-sub">min $10 to start</div>
           </div>
         </div>
         <div class="plan-card-foot">
@@ -851,7 +851,7 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
 
       <!-- PRO SLOT -->
       <section class="dash-panel" id="panel-pro">
-        <div class="panel-title">Pro Slot <span class="panel-badge">$6/hr</span></div>
+        <div class="panel-title">Pro Slot <span class="panel-badge">$10/day</span></div>
         <div class="card" id="pro-active-card" style="display:none;">
           <div class="card-label">Your Active Key</div>
           <div class="key-box" id="pro-key-box" onclick="copyKeyBox('pro-key-box','pro-key-text')">
@@ -867,11 +867,11 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
         </div>
         <div class="card" id="pro-inactive-card">
           <div class="card-label">Activate Pro Slot</div>
-          <p style="font-size:0.82rem;color:var(--ink2);margin:.5rem 0 1.25rem;line-height:1.8;font-weight:300;">Spend credits to activate your slot. 6 credits = 1 hour. Whole hours only.</p>
+          <p style="font-size:0.82rem;color:var(--ink2);margin:.5rem 0 1.25rem;line-height:1.8;font-weight:300;">Spend credits to activate your slot. 10 credits = 1 day. Days only.</p>
           <div class="g2" style="align-items:end;gap:1rem;">
             <div class="form-group">
               <label>Credits to spend (balance: <span id="pro-balance-label">0</span>)</label>
-              <input type="number" id="pro-credits-input" placeholder="e.g. 6 = 1 hour" min="6" step="6">
+              <input type="number" id="pro-credits-input" placeholder="e.g. 10 = 1 day" min="10" step="10">
             </div>
             <div>
               <div style="font-size:0.72rem;color:var(--ink3);margin-bottom:8px;font-family:'DM Mono',monospace;" id="pro-hours-preview">—</div>
@@ -892,7 +892,7 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
 
       <!-- BID SLOTS -->
       <section class="dash-panel" id="panel-bid">
-        <div class="panel-title">Bid Slots <span class="panel-badge">$12 min · 2hr prize</span></div>
+        <div class="panel-title">Bid Slots <span class="panel-badge">$10 min · 1 day prize</span></div>
         <div class="g2" id="bid-slots-grid"></div>
         <div class="card" id="bid-key-card" style="display:none;">
           <div class="card-label">Your Active Bid Key</div>
@@ -952,6 +952,7 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
         <div class="card">
           <div class="card-label">Slot Controls</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:0.85rem;">
+            <button class="btn btn-danger btn-sm" id="pause-all-btn" onclick="togglePause('all')">Pause All</button>
             <button class="btn btn-danger btn-sm" id="pause-pro-btn" onclick="togglePause('pro')">Pause Pro</button>
             <button class="btn btn-danger btn-sm" id="pause-bid-btn" onclick="togglePause('bid')">Pause Bid</button>
           </div>
@@ -968,10 +969,8 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
         <div class="card">
           <div class="card-label">Auction Management</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:0.75rem;">
-            <button class="btn btn-ghost btn-sm" onclick="adminResetAuction('bid_slot_1')">Reset Slot 1</button>
-            <button class="btn btn-ghost btn-sm" onclick="adminResetAuction('bid_slot_2')">Reset Slot 2</button>
-            <button class="btn btn-danger btn-sm" onclick="adminForceEnd('bid_slot_1')">Force End Slot 1</button>
-            <button class="btn btn-danger btn-sm" onclick="adminForceEnd('bid_slot_2')">Force End Slot 2</button>
+            <button class="btn btn-ghost btn-sm" onclick="adminResetAuction('bid_slot_1')">Reset Slot</button>
+            <button class="btn btn-danger btn-sm" onclick="adminForceEnd('bid_slot_1')">Force End Slot</button>
           </div>
         </div>
         <div class="card">
@@ -995,7 +994,7 @@ footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;
     <button class="modal-close" onclick="closeModal('bid-modal')">&#x2715;</button>
     <h3>Place Bid — <span id="bid-modal-slot">Slot</span></h3>
     <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1.25rem;font-weight:300;line-height:1.8;">Win 2 hours flat. Losers fully refunded.</p>
-    <div class="form-group"><label id="bid-modal-label">Bid amount (min 12)</label><input type="number" id="bid-amount-input" min="12" placeholder="e.g. 16"></div>
+    <div class="form-group"><label id="bid-modal-label">Bid amount (min 10)</label><input type="number" id="bid-amount-input" min="10" placeholder="e.g. 10"></div>
     <div style="font-size:0.7rem;color:var(--ink3);margin-top:7px;font-family:'DM Mono',monospace;" id="bid-modal-hint"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost btn-sm" onclick="closeModal('bid-modal')">Cancel</button>
@@ -1219,7 +1218,7 @@ function makeBigCard({slotLabel, username, avatar, userId, isActive, isLive, isB
   let expiryHtml = '';
   if(isActive && expiry){
     const left = expiry - Date.now();
-    const pct = Math.max(0, Math.min(100, (left / (isBid ? 7200000 : 3600000)) * 100));
+    const pct = Math.max(0, Math.min(100, (left / (isBid ? 86400000 : 86400000)) * 100));
     const fillClass = pct < 20 ? 'fill-red' : '';
     expiryHtml = `
       <div class="cust-big-expiry-label">${left > 0 ? formatTime(left) + ' remaining' : 'Expired'}</div>
@@ -1334,7 +1333,7 @@ function renderOverview(){
   document.getElementById('ov-pro-expiry').innerHTML=ps?`<div class="prog-bar" style="margin-top:10px;"><div class="prog-fill" style="width:${getExpPct(ps.expiry,ps.activatedAt||Date.now()-3600000)}%"></div></div><div class="prog-label">${formatTime(ps.expiry-Date.now())} remaining</div>`:'';
   const bs=me.bidSlot;
   document.getElementById('ov-bid-status').innerHTML=bs?'<span class="sdot sdot-gold"></span> Active (won)':'<span class="sdot sdot-gray"></span> No active slot';
-  document.getElementById('ov-bid-expiry').innerHTML=bs?`<div class="prog-bar" style="margin-top:10px;"><div class="prog-fill" style="width:${getExpPct(bs.expiry,Date.now()-7200000)}%"></div></div><div class="prog-label">${formatTime(bs.expiry-Date.now())} remaining</div>`:'';
+  document.getElementById('ov-bid-expiry').innerHTML=bs?`<div class="prog-bar" style="margin-top:10px;"><div class="prog-fill" style="width:${getExpPct(bs.expiry,Date.now()-86400000)}%"></div></div><div class="prog-label">${formatTime(bs.expiry-Date.now())} remaining</div>`:'';
   const activeSlot=ps||bs,keyCard=document.getElementById('ov-key-card');
   if(activeSlot){
     keyCard.style.display='block';
@@ -1369,7 +1368,7 @@ function renderProPanel(){
 document.getElementById('pro-credits-input').addEventListener('input',function(){
   const v=parseInt(this.value),el=document.getElementById('pro-hours-preview');
   if(!v||v<=0){el.textContent='—';return;}
-  el.innerHTML=`<span style="color:var(--gold-dim);font-family:'DM Mono',monospace;">${v} CR</span> = ${formatHours(v/6)}`;
+  el.innerHTML=`<span style="color:var(--gold-dim);font-family:'DM Mono',monospace;">${v} CR</span> = ${Math.round(v/10)} day(s)`;
 });
 
 async function activateProSlot(){
@@ -1395,14 +1394,14 @@ function renderBidPanel(){
     const stag=isCool?'<span class="tag tag-red">TAKEN</span>':isLive?'<span class="tag tag-gold">LIVE</span>':b.paused?'<span class="tag tag-red">PAUSED</span>':'<span class="tag tag-gray">WAITING</span>';
     const timeEl=isLive&&b.endsAt?`<div class="bid-timer" id="bid-timer-${b.slotIndex}">${formatTime(b.endsAt-Date.now())}</div>`:isCool&&b.cooldownUntil?`<span style="font-size:0.76rem;color:var(--ink3);font-family:'DM Mono',monospace;">Unlocks ${formatTime(b.cooldownUntil-Date.now())}</span>`:`<span style="color:var(--ink3);">—</span>`;
     const topBid=b.topBid?`<span style="font-family:'DM Mono',monospace;color:var(--gold-dim);font-size:1.1rem;">${b.topBid.amount} CR</span>`:`<span style="color:var(--ink3);">No bids</span>`;
-    return`<div class="bid-slot-card ${isLive?'live':''}"><div class="bid-slot-name">Bid Slot ${b.slotIndex} ${stag}</div><div class="g2" style="gap:8px;margin-bottom:1rem;"><div class="card card-sm" style="background:var(--surface2);"><div class="card-label">Top Bid</div>${topBid}</div><div class="card card-sm" style="background:var(--surface2);"><div class="card-label">Time Left</div>${timeEl}</div></div><div style="font-size:0.72rem;color:var(--ink3);margin-bottom:0.9rem;">${b.bidCount||0} bid(s) · Prize: 2h flat</div><button class="btn btn-gold btn-sm" ${dis} onclick="openBidModal(${b.slotIndex})">Place Bid</button></div>`;
+    return`<div class="bid-slot-card ${isLive?'live':''}"><div class="bid-slot-name">Bid Slot ${b.slotIndex} ${stag}</div><div class="g2" style="gap:8px;margin-bottom:1rem;"><div class="card card-sm" style="background:var(--surface2);"><div class="card-label">Top Bid</div>${topBid}</div><div class="card card-sm" style="background:var(--surface2);"><div class="card-label">Time Left</div>${timeEl}</div></div><div style="font-size:0.72rem;color:var(--ink3);margin-bottom:0.9rem;">${b.bidCount||0} bid(s) · Prize: 1 day</div><button class="btn btn-gold btn-sm" ${dis} onclick="openBidModal(${b.slotIndex})">Place Bid</button></div>`;
   }).join('');
   (status.bid||[]).forEach(b=>{if(b.status==='live'&&b.endsAt)startBidTimer(b.slotIndex,b.endsAt);});
   const bSlot=me.bidSlot,kc=document.getElementById('bid-key-card');
   if(bSlot){
     kc.style.display='block';
     document.getElementById('bid-key-text').textContent=bSlot.key;
-    document.getElementById('bid-prog').style.width=getExpPct(bSlot.expiry,Date.now()-7200000)+'%';
+    document.getElementById('bid-prog').style.width=getExpPct(bSlot.expiry,Date.now()-86400000)+'%';
     document.getElementById('bid-prog-label').textContent='Expires in '+formatTime(bSlot.expiry-Date.now());
   }else kc.style.display='none';
 }
@@ -1421,7 +1420,7 @@ function startBidTimer(idx,endsAt){
 function openBidModal(slotIndex){
   currentBidSlot=slotIndex;
   if(!me){window.location.href='/auth/discord';return;}
-  const b=status?.bid?.find(x=>x.slotIndex===slotIndex),minBid=b?.topBid?b.topBid.amount+1:12;
+  const b=status?.bid?.find(x=>x.slotIndex===slotIndex),minBid=b?.topBid?b.topBid.amount+1:10;
   document.getElementById('bid-modal-slot').textContent=`Slot ${slotIndex}`;
   document.getElementById('bid-modal-label').textContent=`Bid amount (min ${minBid} · balance: ${me.credits} CR)`;
   document.getElementById('bid-modal-hint').textContent=b?.topBid?`Current leader: ${b.topBid.amount} CR`:'No bids yet — be first.';
@@ -1432,7 +1431,7 @@ function openBidModal(slotIndex){
 
 async function submitBid(){
   const amount=parseInt(document.getElementById('bid-amount-input').value);
-  if(!amount||amount<12){toast('Minimum bid is 12 credits.','error');return;}
+  if(!amount||amount<10){toast('Minimum bid is 10 credits.','error');return;}
   const btn=document.getElementById('bid-submit-btn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>';
   try{
@@ -1487,6 +1486,7 @@ async function loadAdminPanel(){
     const r=await fetch('/api/admin/overview');if(!r.ok)return;
     const d=await r.json();
     document.getElementById('admin-stats').innerHTML=`<div class="admin-stat"><div class="asval">${d.users.length}</div><div class="aslbl">Total Users</div></div><div class="admin-stat"><div class="asval">${d.slots.length}</div><div class="aslbl">Active Slots</div></div><div class="admin-stat"><div class="asval">${d.payments}</div><div class="aslbl">Payments</div></div><div class="admin-stat" style="border-color:${d.pauseState.pro||d.pauseState.bid?'rgba(192,57,43,0.25)':'var(--border)'};"><div class="asval" style="color:${d.pauseState.pro||d.pauseState.bid?'var(--danger)':'var(--success)'};">${d.pauseState.pro||d.pauseState.bid?'PAUSED':'OPEN'}</div><div class="aslbl">System</div></div>`;
+    document.getElementById('pause-all-btn').textContent=(d.pauseState.pro&&d.pauseState.bid)?'Unpause All':'Pause All';
     document.getElementById('pause-pro-btn').textContent=d.pauseState.pro?'Unpause Pro':'Pause Pro';
     document.getElementById('pause-bid-btn').textContent=d.pauseState.bid?'Unpause Bid':'Pause Bid';
     document.getElementById('pause-status').textContent=`Pro: ${d.pauseState.pro?'PAUSED':'Active'} · Bid: ${d.pauseState.bid?'PAUSED':'Active'}`;
@@ -1495,10 +1495,11 @@ async function loadAdminPanel(){
 }
 
 async function togglePause(type){
-  const btn=document.getElementById(`pause-${type}-btn`),isPaused=btn.textContent.includes('Unpause');
+  const btnId=type==='all'?'pause-all-btn':`pause-${type}-btn`;
+  const btn=document.getElementById(btnId),isPaused=btn.textContent.includes('Unpause');
   const r=await fetch('/api/admin/pause',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,paused:!isPaused})});
   if(!r.ok){toast('Error.','error');return;}
-  toast(`${type.toUpperCase()} ${!isPaused?'paused':'unpaused'}.`,'info');loadAdminPanel();
+  toast(`${type.toUpperCase()} ${!isPaused?'paused — user time frozen':'unpaused — time restored via Luarmor'}.`,'info');loadAdminPanel();
 }
 function openGiveCredits(id,username,credits){
   adminTarget={id,username,credits};
