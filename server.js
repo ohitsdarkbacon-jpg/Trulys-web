@@ -47,17 +47,17 @@ const LUARMOR_PROJECT_BID   = process.env.LUARMOR_PROJECT_ID_BID;   // Bid tier
 
 const PRO_CONFIG = {
   name:           'Pro',
-  pricePerHour:   8,      // $8/hr => 8 credits/hr
+  pricePerHour:   10,     // $10/day => 10 credits/24hrs
   maxSlots:       6,
-  creditToHours:  (c) => c / 8,
+  creditToHours:  (c) => (c / 10) * 24,  // 10 credits = 24 hours
   projectId:      LUARMOR_PROJECT_PRO,
 };
 
 const BID_CONFIG = {
   name:           'Bid',
-  minBid:         16,     // $16 minimum
-  prizeHours:     2,      // always 2hr flat
-  maxSlots:       2,
+  minBid:         10,     // $10 minimum (1 day)
+  prizeHours:     24,     // always 1 day (24hr) flat
+  maxSlots:       1,
   durationMins:   5,
   cooldownMs:     2 * 60 * 60 * 1000,
   projectId:      LUARMOR_PROJECT_BID,
@@ -169,7 +169,7 @@ async function createLuarmorKey(hours, discordId, username, projectId) {
     throw new Error(`No key in Luarmor response. Full response: ${JSON.stringify(fetchData)}`);
   }
 
-  const LOADER_HASH = 'a956818a26401a68387b022f2525679a';
+  const LOADER_HASH = '11c254ffe1bc524bd1915202829923a3';
 
   const loadstring = `script_key="${rawKey}";
 loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/${LOADER_HASH}.lua"))()`;
@@ -421,7 +421,7 @@ app.get('/api/status', (req, res) => {
   const now = Date.now();
   const proSlots = slots.filter(s => s?.type === 'pro' && s.expiry > now);
 
-  const bidStatus = [1, 2].map(i => {
+  const bidStatus = [1].map(i => {
     const aId = getAuctionId(i);
     const a   = auctions[aId] || {};
     const onCooldown = isBidSlotOnCooldown(i);
@@ -458,14 +458,14 @@ app.post('/api/slot/pro/activate', requireAuth, async (req, res) => {
   const { credits } = req.body;
   ensureUser(id);
 
-  if (pauseState.pro) return res.status(400).json({ error: 'Pro slots are currently paused by admin.' });
+  if (pauseState.pro) return res.status(400).json({ error: 'The system is currently paused. Crypto deposits still work.' });
 
   const creditsNum = parseInt(credits);
   if (!creditsNum || creditsNum <= 0) return res.status(400).json({ error: 'Invalid credits amount.' });
   if (creditsNum > users[id].credits) return res.status(400).json({ error: 'Insufficient credits.' });
 
-  const hours = creditsNum / PRO_CONFIG.pricePerHour;
-  if (hours < 0.125) return res.status(400).json({ error: 'Minimum 1 credit ($1) for ~7.5 minutes.' });
+  const hours = PRO_CONFIG.creditToHours(creditsNum);
+  if (creditsNum < 10 || creditsNum % 10 !== 0) return res.status(400).json({ error: 'Credits must be in multiples of 10 (10 credits = 1 day).' });
 
   const activeCount = slots.filter(s => s?.type === 'pro' && s.expiry > Date.now()).length;
   if (activeCount >= PRO_CONFIG.maxSlots) return res.status(400).json({ error: 'All Pro slots are full.' });
@@ -578,8 +578,8 @@ app.post('/api/bid/place', requireAuth, async (req, res) => {
   const { id } = req.session.user;
   const { slotIndex, amount } = req.body;
   const idx = parseInt(slotIndex);
-  if (![1, 2].includes(idx)) return res.status(400).json({ error: 'Invalid slot.' });
-  if (pauseState.bid) return res.status(400).json({ error: 'Bid slots are paused by admin.' });
+  if (![1].includes(idx)) return res.status(400).json({ error: 'Invalid slot.' });
+  if (pauseState.bid) return res.status(400).json({ error: 'The system is currently paused. Crypto deposits still work.' });
 
   ensureUser(id);
   ensureAuction(idx);
@@ -654,12 +654,69 @@ app.post('/api/admin/set-credits', requireAdmin, (req, res) => {
   res.json({ success: true, newBalance: users[userId].credits });
 });
 
-app.post('/api/admin/pause', requireAdmin, (req, res) => {
+app.post('/api/admin/pause', requireAdmin, async (req, res) => {
   const { type, paused } = req.body;
-  if (type === 'pro') pauseState.pro = !!paused;
-  else if (type === 'bid') pauseState.bid = !!paused;
+  const nowPausing = !!paused;
+
+  if (type === 'pro') pauseState.pro = nowPausing;
+  else if (type === 'bid') pauseState.bid = nowPausing;
+  else if (type === 'all') { pauseState.pro = nowPausing; pauseState.bid = nowPausing; }
   savePause();
-  res.json({ success: true, pauseState });
+
+  const slotType = type === 'all' ? null : type; // null means both
+  const affectedTypes = type === 'all' ? ['pro', 'bid'] : [type];
+  const now = Date.now();
+
+  if (nowPausing) {
+    // PAUSE: record remaining time on each active slot and set paused flag
+    for (const s of slots) {
+      if (!affectedTypes.includes(s.type)) continue;
+      if (s.expiry <= now) continue; // already expired
+      s.pausedAt = now;
+      s.remainingMs = s.expiry - now;
+    }
+    saveSlots();
+    console.log(`⏸ System paused (${type}). ${slots.filter(s=>s.pausedAt).length} slots time-frozen.`);
+  } else {
+    // RESUME: restore remaining time via Luarmor API for each paused slot
+    const resumeErrors = [];
+    for (const s of slots) {
+      if (!affectedTypes.includes(s.type)) continue;
+      if (!s.pausedAt || !s.remainingMs) continue;
+      const remainingHours = s.remainingMs / 3600000;
+      const newExpiry = now + s.remainingMs;
+      s.expiry = newExpiry;
+      delete s.pausedAt;
+      delete s.remainingMs;
+      // Update Luarmor expiry
+      if (s.rawKey && s.projectId) {
+        try {
+          const newExpiryUnix = Math.floor(newExpiry / 1000);
+          // Re-create/update the user record with new expiry
+          const u = users[s.userId];
+          const identifier = getUserIdentifier(s.userId, u?.username || s.userId);
+          await axios.post(
+            `https://api.luarmor.net/v3/projects/${s.projectId}/users`,
+            {
+              discord_id:  s.userId,
+              identifier,
+              auth_expire: newExpiryUnix,
+              note:        `${u?.username || s.userId} (resumed from pause)`
+            },
+            { headers: { Authorization: LUARMOR_API_KEY, 'Content-Type': 'application/json' } }
+          );
+          console.log(`▶ Resumed ${s.type} slot for ${s.userId} — new expiry +${Math.round(remainingHours*60)}min`);
+        } catch (err) {
+          console.error(`Failed to resume Luarmor for ${s.userId}:`, err.message);
+          resumeErrors.push(s.userId);
+        }
+      }
+    }
+    saveSlots();
+    console.log(`▶ System resumed (${type}). Resume errors: ${resumeErrors.length}`);
+  }
+
+  res.json({ success: true, pauseState, resumeErrors: nowPausing ? [] : [] });
 });
 
 app.post('/api/admin/revoke-slot', requireAdmin, (req, res) => {
@@ -741,7 +798,10 @@ setInterval(async () => {
 
 setInterval(() => {
   const before = slots.length;
-  slots = slots.filter(s => s?.expiry > Date.now());
+  slots = slots.filter(s => {
+    if (s?.pausedAt) return true; // keep paused slots regardless of expiry
+    return s?.expiry > Date.now();
+  });
   if (slots.length !== before) saveSlots();
 }, 60000);
 
@@ -768,7 +828,7 @@ app.get('*', (req, res) => {
 });
 
 // ===== RESUME =====
-for (let i = 1; i <= 2; i++) ensureAuction(i);
+for (let i = 1; i <= 1; i++) ensureAuction(i);
 for (const [aId, a] of Object.entries(auctions)) {
   if (a.status === 'live') {
     const rem = a.endsAt - Date.now();
